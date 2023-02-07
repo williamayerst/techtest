@@ -1,0 +1,35 @@
+name: 'Hydration'
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_name:
+        description: 'GH Username of the Candidate'
+        required: true
+        default: 'example'
+        type: string
+      gh_org:
+        description: 'GH Org for Cloned Repo to Reside'
+        required: true
+        default: 'williamayerst'
+
+jobs:
+  Stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --private --license mit
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+      - run: gh api --method=PUT 'repos/${{ github.event.inputs.gh_org }}/techtest-${{ github.event.inputs.candidate_name }}/collaborators/${{ github.event.inputs.candidate_name }}'
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+      - name: Seed a target repository # https://github.com/marketplace/actions/copy-files-to-another-repository
+        uses: nkoppel/push-files-to-another-repository@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ORG_ADMIN_TOKEN }}
+        with:
+          source-files: 'seed/*'
+          destination-username: 'williamayerst'
+          destination-branch: 'main'
+          destination-repository: 'techtest-${{ github.event.inputs.candidate_name }}'
