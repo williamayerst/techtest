@@ -16,7 +16,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v2
     - name: Creating GitHub Organization Repository
-      uses: repo-ctrl/create-repo-action@main
+      uses: repo-ctrl/create-repo-action@v1.1
       id: create-repo
       with:
         repo-name: 'techtest-${{ github.event.inputs.candidate_name }}'
@@ -24,13 +24,9 @@ jobs:
         # destination-username: <inherited from workflow context>
     - name: Log URL to the repo
       run: echo "The new repo is ${{ steps.create-repo.outputs.repo-url }}"
-
-  Hydrate:
-    runs-on: ubuntu-latest
-    steps:
     - uses: actions/checkout@v3
     - name: Push generated webpage to another repository # https://github.com/marketplace/actions/copy-files-to-another-repository
-      uses: nkoppel/push-files-to-another-repository@1.1.0
+      uses: nkoppel/push-files-to-another-repository@1.1.1
       env:
         API_TOKEN_GITHUB: ${{ secrets.ORG_ADMIN_TOKEN }}
       with:
