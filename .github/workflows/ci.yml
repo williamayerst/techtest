@@ -21,7 +21,7 @@ jobs:
       - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --private --license mit
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
-      - run: gh api --method=PUT 'repos/${{ github.event.inputs.gh_org }}/${{ github.event.inputs.candidate_name }}/collaborators/${{ github.event.inputs.candidate_name }}'
+      - run: gh api --method=PUT 'repos/${{ github.event.inputs.gh_org }}/techtest-${{ github.event.inputs.candidate_name }}/collaborators/${{ github.event.inputs.candidate_name }}'
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Push generated webpage to another repository # https://github.com/marketplace/actions/copy-files-to-another-repository
