@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --public
+      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --public --license mit
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
       - name: Push generated webpage to another repository # https://github.com/marketplace/actions/copy-files-to-another-repository
@@ -24,4 +24,5 @@ jobs:
         with:
           source-files: 'seed/'
           destination-username: 'williamayerst'
+          destination-branch: 'main'
           destination-repository: 'techtest-${{ github.event.inputs.candidate_name }}'
