@@ -22,7 +22,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.ORG_ADMIN_TOKEN }}
         with:
-          source-files: 'seed/'
+          source-files: 'seed/*'
           destination-username: 'williamayerst'
           destination-branch: 'main'
           destination-repository: 'techtest-${{ github.event.inputs.candidate_name }}'
