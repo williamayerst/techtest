@@ -14,6 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --source . --remote=upstream --public
+      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --public
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+      - name: Push generated webpage to another repository # https://github.com/marketplace/actions/copy-files-to-another-repository
+        uses: nkoppel/push-files-to-another-repository@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.ORG_ADMIN_TOKEN }}
+        with:
+          source-files: 'seed/'
+          destination-username: 'williamayerst'
+          destination-repository: 'techtest-${{ github.event.inputs.candidate_name }}'
