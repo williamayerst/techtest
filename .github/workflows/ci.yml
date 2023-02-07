@@ -6,30 +6,13 @@ on:
       candidate_name:
         description: 'Name of the Candidate'
         required: true
-        default: 'warning'
+        default: 'example'
         type: string
 
 jobs:
   Stage:
     runs-on: ubuntu-latest
     steps:
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-    - name: Creating GitHub Organization Repository
-      uses: repo-ctrl/create-repo-action@v1.1
-      id: create-repo
-      with:
-        repo-name: 'techtest-${{ github.event.inputs.candidate_name }}'
-        org-admin-token: '${{ secrets.ORG_ADMIN_TOKEN }}'
-        # destination-username: <inherited from workflow context>
-    - name: Log URL to the repo
-      run: echo "The new repo is ${{ steps.create-repo.outputs.repo-url }}"
-    - uses: actions/checkout@v3
-    - name: Push generated webpage to another repository # https://github.com/marketplace/actions/copy-files-to-another-repository
-      uses: nkoppel/push-files-to-another-repository@v1.1.1
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.ORG_ADMIN_TOKEN }}
-      with:
-        source-files: 'docs/'
-        destination-username: 'williamayerst'
-        destination-repository: 'techtest-${{ github.event.inputs.candidate_name }}'
+      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --source./docs/ --public
+        env:
+          GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
