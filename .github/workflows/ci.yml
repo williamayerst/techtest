@@ -1,4 +1,4 @@
-name: 'techtest'
+name: 'Hydration'
 
 on:
   workflow_dispatch:
@@ -24,7 +24,7 @@ jobs:
       - run: gh api --method=PUT 'repos/${{ github.event.inputs.gh_org }}/techtest-${{ github.event.inputs.candidate_name }}/collaborators/${{ github.event.inputs.candidate_name }}'
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
-      - name: Push generated webpage to another repository # https://github.com/marketplace/actions/copy-files-to-another-repository
+      - name: Seed a target repository # https://github.com/marketplace/actions/copy-files-to-another-repository
         uses: nkoppel/push-files-to-another-repository@v1.1.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.ORG_ADMIN_TOKEN }}
