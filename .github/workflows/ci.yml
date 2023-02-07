@@ -13,6 +13,6 @@ jobs:
   Stage:
     runs-on: ubuntu-latest
     steps:
-      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --source./docs/ --public
+      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --source ./docs/ --public
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
