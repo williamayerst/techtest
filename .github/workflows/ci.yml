@@ -14,6 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --source . --public
+      - run: gh repo create techtest-${{ github.event.inputs.candidate_name }} --source . --remote=upstream --public
         env:
           GH_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
